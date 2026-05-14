@@ -1,0 +1,793 @@
+:root {
+  --bg: #05080d;
+  --panel: rgba(12, 18, 27, 0.86);
+  --ink: #edf6fb;
+  --muted: #93a5b2;
+  --line: rgba(142, 170, 186, 0.24);
+  --blue: #39d5e8;
+  --blue-dark: #8df4ff;
+  --red: #ff526f;
+  --amber: #ffad3d;
+  --green: #35d39a;
+  --shadow: 0 28px 76px rgba(0, 0, 0, 0.46);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 24% 16%, rgba(57, 213, 232, 0.13), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(255, 82, 111, 0.13), transparent 31%),
+    linear-gradient(180deg, #081019 0%, #05080d 48%, #030509 100%),
+    var(--bg);
+}
+
+button {
+  font: inherit;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 22px;
+  width: min(1380px, calc(100vw - 40px));
+  min-height: calc(100vh - 40px);
+  margin: 20px auto;
+}
+
+.stage,
+.control-panel {
+  background: var(--panel);
+  border: 1px solid rgba(139, 217, 231, 0.2);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.stage {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.stage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 28px 10px;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--blue-dark);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(28px, 4vw, 54px);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.status-pill {
+  min-width: 116px;
+  padding: 10px 14px;
+  color: #041017;
+  font-weight: 800;
+  text-align: center;
+  background: var(--green);
+  border-radius: 999px;
+  box-shadow: 0 0 28px rgba(53, 211, 154, 0.26);
+  white-space: nowrap;
+}
+
+.model-wrap {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0 16px 18px;
+}
+
+.model {
+  width: 100%;
+  max-height: calc(100vh - 134px);
+  min-height: 520px;
+}
+
+.backdrop {
+  fill: #060b12;
+}
+
+.scan-grid {
+  opacity: 0.28;
+}
+
+.scan-grid path {
+  fill: none;
+  stroke: rgba(111, 165, 184, 0.18);
+  stroke-width: 1;
+}
+
+.torso,
+.neck,
+.head {
+  fill: url(#skinGrad);
+  opacity: 0.76;
+  stroke: rgba(148, 194, 207, 0.38);
+  stroke-width: 2.2;
+}
+
+.face-profile,
+.mouth,
+.nose {
+  fill: none;
+  stroke: rgba(234, 187, 164, 0.72);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 5;
+}
+
+.lung {
+  fill: url(#lungGrad);
+  opacity: 0.74;
+  stroke: rgba(255, 173, 190, 0.92);
+  stroke-width: 3.4;
+  filter: drop-shadow(0 0 18px rgba(255, 82, 111, 0.2));
+}
+
+.lung-detail path {
+  fill: none;
+  stroke: rgba(255, 211, 217, 0.34);
+  stroke-linecap: round;
+  stroke-width: 3.4;
+}
+
+.lung-detail circle {
+  fill: none;
+  stroke: rgba(255, 211, 217, 0.34);
+  stroke-width: 2.4;
+}
+
+.diaphragm {
+  fill: none;
+  stroke: #ff98a9;
+  stroke-linecap: round;
+  stroke-width: 10;
+  opacity: 0.82;
+}
+
+.rib-cage path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sternum {
+  stroke: rgba(224, 238, 247, 0.5);
+  stroke-width: 9;
+}
+
+.rib {
+  stroke: url(#ribGrad);
+  stroke-width: 7;
+}
+
+.respiratory-muscles {
+  transform-box: fill-box;
+  transform-origin: 50% 62%;
+  animation: muscleBreath 2.5s ease-in-out infinite;
+}
+
+.intercostal,
+.diaphragm-muscle {
+  fill: none;
+  stroke: url(#muscleGrad);
+  stroke-linecap: round;
+}
+
+.intercostal {
+  stroke-width: 10;
+  opacity: 0.62;
+}
+
+.diaphragm-muscle {
+  stroke-width: 22;
+  opacity: 0.45;
+}
+
+.airway path {
+  fill: none;
+  stroke: url(#airwayGrad);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 19;
+  filter: drop-shadow(0 0 8px rgba(57, 213, 232, 0.48));
+}
+
+.airway .bronchus {
+  stroke-width: 13;
+}
+
+.airway .terminal-left-a,
+.airway .terminal-left-b,
+.airway .terminal-right-a,
+.airway .terminal-right-b {
+  stroke-width: 7;
+  opacity: 0.82;
+}
+
+.airway .nasal-cavity,
+.airway .pharynx {
+  stroke-width: 12;
+}
+
+.air-labels text,
+.impact-meter text {
+  fill: #d8f7ff;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.air-labels text {
+  paint-order: stroke;
+  stroke: #061019;
+  stroke-width: 9px;
+}
+
+.air-dot {
+  fill: #e7fbff;
+  filter: url(#pulseGlow);
+  opacity: 0.92;
+}
+
+.dot-1 {
+  animation: breatheNose 2.5s ease-in-out infinite;
+}
+
+.dot-2 {
+  animation: breatheTrachea 2.5s ease-in-out infinite;
+}
+
+.dot-3 {
+  animation: breatheLeft 2.5s ease-in-out infinite;
+}
+
+.dot-4 {
+  animation: breatheRight 2.5s ease-in-out infinite;
+}
+
+.lungs {
+  transform-box: fill-box;
+  transform-origin: 50% 70%;
+  animation: lungBreath 2.5s ease-in-out infinite;
+}
+
+.foreign-body {
+  transform: translate(1020px, 250px);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.object {
+  fill: #ff8847;
+  stroke: #ffdfb7;
+  stroke-width: 4;
+  filter: drop-shadow(0 0 10px rgba(255, 136, 71, 0.56));
+}
+
+.object-highlight {
+  fill: rgba(255, 255, 255, 0.72);
+}
+
+.block-ring {
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+
+.block-ring circle {
+  fill: rgba(255, 82, 111, 0.12);
+  stroke: var(--red);
+  stroke-dasharray: 7 7;
+  stroke-width: 4;
+}
+
+.hands {
+  opacity: 0.18;
+  transform-box: fill-box;
+  transform-origin: 493px 489px;
+  transition: opacity 260ms ease;
+}
+
+.rescuer-arm {
+  fill: none;
+  stroke: rgba(56, 128, 150, 0.86);
+  stroke-linecap: round;
+  stroke-width: 28;
+}
+
+.fist {
+  fill: #c58b72;
+  stroke: #f5c6ad;
+  stroke-width: 4;
+}
+
+.thumb {
+  fill: none;
+  stroke: #f5c6ad;
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
+.pressure-wave {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wave {
+  fill: none;
+  stroke: #f4fdff;
+  stroke-width: 6;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.impact-meter rect:first-of-type {
+  fill: rgba(218, 240, 247, 0.14);
+}
+
+#meterFill {
+  fill: var(--blue);
+  transition: width 260ms ease;
+}
+
+.control-panel {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.phase-list {
+  display: grid;
+  gap: 12px;
+}
+
+.phase {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(10, 17, 25, 0.72);
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    transform 180ms ease;
+}
+
+.phase span {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: #b8d1dc;
+  font-weight: 900;
+  background: rgba(216, 247, 255, 0.12);
+  border-radius: 50%;
+}
+
+.phase strong {
+  display: block;
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.phase p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.phase.active {
+  background: rgba(26, 72, 86, 0.44);
+  border-color: rgba(57, 213, 232, 0.58);
+  transform: translateX(-3px);
+}
+
+.phase.active span {
+  color: #041017;
+  background: var(--blue);
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.object-size {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(10, 17, 25, 0.72);
+}
+
+.object-size legend {
+  padding: 0 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.object-size label {
+  position: relative;
+  cursor: pointer;
+}
+
+.object-size input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.object-size span {
+  display: grid;
+  place-items: center;
+  min-height: 38px;
+  color: #d8f7ff;
+  font-weight: 900;
+  border: 1px solid rgba(216, 247, 255, 0.16);
+  border-radius: 8px;
+  background: rgba(216, 247, 255, 0.08);
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.object-size input:checked + span {
+  color: #061019;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.btn {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  color: #061019;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    transform 130ms ease,
+    filter 130ms ease,
+    opacity 130ms ease;
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.primary {
+  background: var(--blue);
+}
+
+.secondary {
+  background: var(--green);
+}
+
+.warning {
+  background: var(--amber);
+}
+
+.ghost {
+  color: var(--ink);
+  background: rgba(216, 247, 255, 0.12);
+  border: 1px solid rgba(216, 247, 255, 0.18);
+}
+
+.readout {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(10, 17, 25, 0.72);
+}
+
+.readout div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 32px;
+  border-bottom: 1px solid rgba(216, 247, 255, 0.1);
+}
+
+.readout div:last-child {
+  border-bottom: 0;
+}
+
+.readout span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.readout strong {
+  font-size: 15px;
+}
+
+.safety-note {
+  margin: 0;
+  padding: 13px 14px;
+  color: #ffd7a1;
+  font-size: 13px;
+  line-height: 1.6;
+  background: rgba(255, 173, 61, 0.11);
+  border: 1px solid rgba(255, 173, 61, 0.32);
+  border-radius: 8px;
+}
+
+body[data-state="blocked"] .status-pill {
+  background: var(--red);
+  box-shadow: 0 0 28px rgba(255, 82, 111, 0.34);
+}
+
+body[data-state="rescue"] .status-pill {
+  background: var(--amber);
+  box-shadow: 0 0 28px rgba(255, 173, 61, 0.32);
+}
+
+body[data-state="expelled"] .status-pill {
+  background: var(--green);
+}
+
+body[data-state="blocked"] .air-flow,
+body[data-state="rescue"] .air-flow {
+  opacity: 0.12;
+}
+
+body[data-state="blocked"] .lungs,
+body[data-state="rescue"] .lungs,
+body[data-state="blocked"] .respiratory-muscles,
+body[data-state="rescue"] .respiratory-muscles {
+  animation-duration: 1.35s;
+}
+
+body[data-state="blocked"] .block-ring,
+body[data-state="rescue"] .block-ring {
+  opacity: 1;
+}
+
+body[data-state="rescue"] .hands {
+  opacity: 1;
+}
+
+body[data-state="expelled"] .block-ring {
+  opacity: 0;
+}
+
+body[data-state="expelled"] .air-flow {
+  opacity: 0.92;
+}
+
+.thrusting .hands {
+  animation: thrustHands 360ms ease-out;
+}
+
+.thrusting .diaphragm {
+  animation: diaphragmLift 360ms ease-out;
+}
+
+.thrusting .pressure-wave {
+  opacity: 1;
+}
+
+.thrusting .wave-1 {
+  animation: pressurePulse 360ms ease-out;
+}
+
+.thrusting .wave-2 {
+  animation: pressurePulse 360ms 80ms ease-out;
+}
+
+@keyframes lungBreath {
+  0%,
+  100% {
+    transform: scale(0.982) translateY(5px);
+  }
+  50% {
+    transform: scale(1.035) translateY(-7px);
+  }
+}
+
+@keyframes muscleBreath {
+  0%,
+  100% {
+    transform: translateY(5px) scaleX(0.988);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateY(-9px) scaleX(1.03);
+    opacity: 1;
+  }
+}
+
+@keyframes breatheNose {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  45% {
+    transform: translate(-55px, 98px);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-56px, 128px);
+    opacity: 0;
+  }
+}
+
+@keyframes breatheTrachea {
+  0%,
+  100% {
+    transform: translate(0, -18px);
+    opacity: 0;
+  }
+  55% {
+    transform: translate(0, 76px);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(0, 106px);
+    opacity: 0;
+  }
+}
+
+@keyframes breatheLeft {
+  0%,
+  100% {
+    transform: translate(60px, -65px);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  82% {
+    transform: translate(-35px, 70px);
+    opacity: 0;
+  }
+}
+
+@keyframes breatheRight {
+  0%,
+  100% {
+    transform: translate(-70px, -65px);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  82% {
+    transform: translate(35px, 70px);
+    opacity: 0;
+  }
+}
+
+@keyframes thrustHands {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  45% {
+    transform: translateY(-28px) scale(0.96);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes diaphragmLift {
+  0% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-18px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes pressurePulse {
+  0% {
+    transform: scale(0.4) translateY(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.6) translateY(-78px);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 1080px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    width: min(960px, calc(100vw - 28px));
+  }
+
+  .model {
+    max-height: none;
+    min-height: auto;
+  }
+
+  .control-panel {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .phase-list,
+  .readout,
+  .safety-note {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    width: calc(100vw - 18px);
+    min-height: calc(100vh - 18px);
+    margin: 9px auto;
+  }
+
+  .stage-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 18px 16px 8px;
+  }
+
+  .control-panel {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .button-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .model-wrap {
+    padding: 0 4px 10px;
+  }
+}

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>海姆立克急救互动模型</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="stage" aria-label="海姆立克急救互动模型">
+        <div class="stage-header">
+          <div>
+            <p class="eyebrow">呼吸道急救交互演示</p>
+            <h1>海姆立克急救模型</h1>
+          </div>
+          <div class="status-pill" id="statusPill">正常呼吸</div>
+        </div>
+
+        <div class="model-wrap">
+          <svg
+            id="rescueModel"
+            class="model"
+            viewBox="0 0 960 680"
+            role="img"
+            aria-labelledby="modelTitle modelDesc"
+          >
+            <title id="modelTitle">人体呼吸系统与海姆立克急救模型</title>
+            <desc id="modelDesc">展示鼻腔、咽喉、气管、支气管、肺部、肋间肌、横膈膜、异物和腹部冲击。</desc>
+
+            <defs>
+              <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#372a2f" />
+                <stop offset="100%" stop-color="#151a20" />
+              </linearGradient>
+              <radialGradient id="lungGrad" cx="50%" cy="42%" r="68%">
+                <stop offset="0%" stop-color="#fb9ca8" />
+                <stop offset="58%" stop-color="#b63f55" />
+                <stop offset="100%" stop-color="#581927" />
+              </linearGradient>
+              <linearGradient id="airwayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#d7fbff" />
+                <stop offset="52%" stop-color="#3ecde2" />
+                <stop offset="100%" stop-color="#0b7288" />
+              </linearGradient>
+              <linearGradient id="ribGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#9aa9b6" stop-opacity="0.1" />
+                <stop offset="50%" stop-color="#e2edf3" stop-opacity="0.52" />
+                <stop offset="100%" stop-color="#9aa9b6" stop-opacity="0.1" />
+              </linearGradient>
+              <linearGradient id="muscleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ff7d6e" stop-opacity="0.82" />
+                <stop offset="100%" stop-color="#94304b" stop-opacity="0.46" />
+              </linearGradient>
+              <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.48" />
+              </filter>
+              <filter id="pulseGlow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <rect class="backdrop" x="0" y="0" width="960" height="680" rx="0" />
+            <g class="scan-grid" aria-hidden="true">
+              <path d="M60 110 H900 M60 190 H900 M60 270 H900 M60 350 H900 M60 430 H900 M60 510 H900 M60 590 H900" />
+              <path d="M120 64 V622 M240 64 V622 M360 64 V622 M480 64 V622 M600 64 V622 M720 64 V622 M840 64 V622" />
+            </g>
+
+            <g class="body" filter="url(#softShadow)">
+              <path
+                class="torso"
+                d="M357 250 C330 300 311 360 304 426 C296 505 337 588 426 619 C491 642 579 624 627 571 C673 520 681 441 665 371 C651 308 626 266 588 235 C529 272 432 273 357 250 Z"
+              />
+              <path
+                class="neck"
+                d="M421 201 C409 224 408 246 419 270 C445 286 505 288 535 270 C548 244 545 223 528 201 Z"
+              />
+              <path
+                class="head"
+                d="M402 94 C437 35 531 43 568 101 C596 145 584 198 546 225 C511 250 455 244 424 213 C397 186 386 134 402 94 Z"
+              />
+              <path
+                class="face-profile"
+                d="M559 122 C594 132 613 149 609 166 C606 178 586 176 571 172 C586 189 576 213 548 225"
+              />
+              <path class="mouth" d="M572 181 C552 185 535 184 519 177" />
+              <path class="nose" d="M550 118 C569 126 579 138 578 151 C566 150 556 146 548 139" />
+            </g>
+
+            <g class="rib-cage" aria-hidden="true">
+              <path class="sternum" d="M492 300 C486 366 488 430 497 505" />
+              <path class="rib rib-1" d="M492 321 C445 297 386 302 344 345" />
+              <path class="rib rib-2" d="M492 350 C431 322 365 333 331 384" />
+              <path class="rib rib-3" d="M493 381 C423 356 358 374 330 430" />
+              <path class="rib rib-4" d="M495 414 C428 395 372 412 348 467" />
+              <path class="rib rib-5" d="M497 447 C441 439 396 455 374 506" />
+              <path class="rib rib-1" d="M493 321 C540 297 599 302 641 345" />
+              <path class="rib rib-2" d="M493 350 C554 322 620 333 654 384" />
+              <path class="rib rib-3" d="M492 381 C562 356 627 374 655 430" />
+              <path class="rib rib-4" d="M490 414 C557 395 613 412 637 467" />
+              <path class="rib rib-5" d="M488 447 C544 439 589 455 611 506" />
+            </g>
+
+            <g class="respiratory-muscles" aria-hidden="true">
+              <path class="intercostal left-muscle" d="M352 354 C393 333 435 328 478 342" />
+              <path class="intercostal left-muscle" d="M340 401 C387 378 436 375 482 392" />
+              <path class="intercostal left-muscle" d="M351 454 C397 431 441 429 486 447" />
+              <path class="intercostal right-muscle" d="M634 354 C592 333 550 328 507 342" />
+              <path class="intercostal right-muscle" d="M646 401 C599 378 550 375 504 392" />
+              <path class="intercostal right-muscle" d="M635 454 C589 431 545 429 500 447" />
+              <path class="diaphragm-muscle" d="M343 540 C397 595 574 598 635 540" />
+            </g>
+
+            <g class="lungs">
+              <path
+                class="lung left-lung"
+                d="M458 319 C405 281 354 318 345 384 C334 468 373 544 430 555 C465 563 489 532 493 486 L493 361 C490 343 477 331 458 319 Z"
+              />
+              <path
+                class="lung right-lung"
+                d="M520 319 C574 280 626 318 635 384 C646 468 607 544 550 555 C516 562 491 532 487 486 L487 361 C491 343 502 331 520 319 Z"
+              />
+              <g class="lung-detail" aria-hidden="true">
+                <path d="M456 351 C419 368 393 409 382 461 C376 493 386 525 414 540" />
+                <path d="M444 400 C416 407 394 426 381 454" />
+                <path d="M438 437 C414 453 398 478 393 514" />
+                <path d="M524 351 C562 368 589 409 600 461 C606 493 596 525 568 540" />
+                <path d="M537 400 C565 407 588 426 601 454" />
+                <path d="M544 437 C568 453 584 478 589 514" />
+                <circle cx="394" cy="482" r="10" />
+                <circle cx="416" cy="514" r="8" />
+                <circle cx="592" cy="482" r="10" />
+                <circle cx="570" cy="514" r="8" />
+              </g>
+              <path class="diaphragm" d="M350 541 C404 595 565 596 628 541" />
+            </g>
+
+            <g class="airway">
+              <path class="nasal-cavity" d="M548 127 C520 125 500 137 489 160 C478 182 461 191 438 188" />
+              <path class="pharynx" d="M438 188 C476 203 493 224 492 262" />
+              <path class="trachea-main" d="M492 258 C492 300 492 331 492 369" />
+              <path class="bronchus bronchus-left" d="M492 365 C462 386 440 407 420 442" />
+              <path class="bronchus bronchus-right" d="M492 365 C524 384 548 407 569 442" />
+              <path class="bronchus small-left-a" d="M425 433 C401 424 382 406 371 382" />
+              <path class="bronchus small-left-b" d="M424 446 C399 464 382 489 373 521" />
+              <path class="bronchus small-right-a" d="M565 433 C590 423 609 405 620 381" />
+              <path class="bronchus small-right-b" d="M566 446 C591 463 608 489 617 521" />
+              <path class="bronchus terminal-left-a" d="M399 421 C381 432 366 450 356 474" />
+              <path class="bronchus terminal-left-b" d="M406 471 C389 493 383 515 384 538" />
+              <path class="bronchus terminal-right-a" d="M587 421 C606 432 621 450 631 474" />
+              <path class="bronchus terminal-right-b" d="M581 471 C598 493 604 515 603 538" />
+            </g>
+
+            <g class="air-labels" aria-hidden="true">
+              <text x="629" y="134">鼻腔</text>
+              <text x="560" y="232">咽喉</text>
+              <text x="520" y="324">气管</text>
+              <text x="592" y="454">支气管</text>
+              <text x="640" y="524">肺部</text>
+              <text x="645" y="585">横膈膜</text>
+              <text x="180" y="398">肋间肌</text>
+            </g>
+
+            <g class="air-flow" aria-hidden="true">
+              <circle class="air-dot dot-1" cx="548" cy="127" r="6" />
+              <circle class="air-dot dot-2" cx="492" cy="258" r="6" />
+              <circle class="air-dot dot-3" cx="425" cy="433" r="6" />
+              <circle class="air-dot dot-4" cx="565" cy="433" r="6" />
+            </g>
+
+            <g class="pressure-wave" aria-hidden="true">
+              <circle class="wave wave-1" cx="493" cy="498" r="20" />
+              <circle class="wave wave-2" cx="493" cy="498" r="20" />
+            </g>
+
+            <g class="hands" aria-hidden="true">
+              <path
+                class="rescuer-arm arm-left"
+                d="M212 443 C273 421 338 431 399 464 C416 474 407 505 388 500 C324 482 268 479 223 498"
+              />
+              <path
+                class="rescuer-arm arm-right"
+                d="M760 443 C699 421 634 431 573 464 C556 474 565 505 584 500 C648 482 704 479 749 498"
+              />
+              <circle class="fist" cx="493" cy="489" r="31" />
+              <path class="thumb" d="M468 480 C482 471 500 471 518 483" />
+            </g>
+
+            <g id="foreignBody" class="foreign-body" aria-hidden="true">
+              <path
+                class="object"
+                d="M-5 0 C11 -6 27 7 25 23 C23 42 -1 52 -16 39 C-32 25 -25 5 -5 0 Z"
+              />
+              <circle class="object-highlight" cx="5" cy="14" r="5" />
+            </g>
+
+            <g class="block-ring" aria-hidden="true">
+              <circle cx="492" cy="252" r="31" />
+            </g>
+
+            <g class="impact-meter" aria-hidden="true">
+              <text x="74" y="91">冲击次数</text>
+              <rect x="74" y="111" width="188" height="14" rx="7" />
+              <rect id="meterFill" x="74" y="111" width="0" height="14" rx="7" />
+              <text id="meterText" x="74" y="154">0 / 5</text>
+            </g>
+          </svg>
+        </div>
+      </section>
+
+      <aside class="control-panel" aria-label="演示控制">
+        <div class="phase-list" id="phaseList">
+          <div class="phase active" data-phase="breathing">
+            <span>1</span>
+            <div>
+              <strong>呼吸</strong>
+              <p>空气经鼻腔、气管进入双肺。</p>
+            </div>
+          </div>
+          <div class="phase" data-phase="blocked">
+            <span>2</span>
+            <div>
+              <strong>阻塞</strong>
+              <p>异物卡在咽喉入口，气流中断。</p>
+            </div>
+          </div>
+          <div class="phase" data-phase="rescue">
+            <span>3</span>
+            <div>
+              <strong>急救</strong>
+              <p>向内上方冲击上腹部，形成气压。</p>
+            </div>
+          </div>
+          <div class="phase" data-phase="expelled">
+            <span>4</span>
+            <div>
+              <strong>排异物</strong>
+              <p>气压推动异物经口腔飞出。</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="button-grid">
+          <button class="btn secondary" id="breatheBtn" type="button">正常呼吸</button>
+          <button class="btn warning" id="blockBtn" type="button">放入异物</button>
+          <button class="btn primary" id="thrustBtn" type="button" disabled>腹部冲击</button>
+          <button class="btn ghost" id="resetBtn" type="button">重置模型</button>
+        </div>
+
+        <fieldset class="object-size">
+          <legend>异物大小</legend>
+          <label>
+            <input type="radio" name="objectSize" value="small" />
+            <span>小</span>
+          </label>
+          <label>
+            <input type="radio" name="objectSize" value="medium" checked />
+            <span>中</span>
+          </label>
+          <label>
+            <input type="radio" name="objectSize" value="large" />
+            <span>大</span>
+          </label>
+        </fieldset>
+
+        <div class="readout">
+          <div>
+            <span>当前阶段</span>
+            <strong id="phaseReadout">呼吸</strong>
+          </div>
+          <div>
+            <span>气流状态</span>
+            <strong id="airReadout">通畅</strong>
+          </div>
+          <div>
+            <span>异物位置</span>
+            <strong id="objectReadout">未进入</strong>
+          </div>
+          <div>
+            <span>异物大小</span>
+            <strong id="sizeReadout">中</strong>
+          </div>
+        </div>
+
+        <p class="safety-note">
+          这是急救动作原理演示，不替代现场培训。真实急救应立即呼叫当地急救电话，并按正式指南操作。
+        </p>
+      </aside>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
